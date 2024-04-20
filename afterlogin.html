@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todolist</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://images.pexels.com/photos/2736499/pexels-photo-2736499.jpeg?cs=srgb&dl=pexels-content-pixie-2736499.jpg&fm=jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #mainContent {
+            position: relative;
+            top: 160px;
+            animation: slideIn 1s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #titleDesc {
+            width: 50%;
+            margin: 0 auto;
+            background-color: rgba(233, 228, 228, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #0c7ffb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .checkbox-column {
+            text-align: center;
+        }
+
+        .finished-checkbox {
+            transform: scale(1.5);
+        }
+        #logoutButton{
+            float: right;
+            position: relative;
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button id="logoutButton"><a href="./index.html">Logout</a></button> 
+        <h1>Todolist</h1>
+        <nav>
+            <ul>
+                <li><a href="#">HOME</a></li>
+                <li>|</li>
+                <li><a href="#">ABOUT</a></li>
+                <li>|</li>
+                <li><a href="#">CONTACT US</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="mainContent">
+        <div id="titleDesc">
+            <form>
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" placeholder="Enter title">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" placeholder="Enter description"></textarea>
+                <button type="button" id="add">Add to list</button>
+            </form>
+        </div>
+        <div class="items" id="my-4">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="checkbox-column">Finished</th>
+                        <th>Item Title</th>
+                        <th>Item Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="tablebody">
+                    <tr></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.getElementById("add").addEventListener("click", function() {
+            const title = document.getElementById('title').value
+            const description = document.getElementById('description').value
+            const tableBody = document.getElementById('tablebody')
+            const newRow = document.createElement('tr')
+            newRow.innerHTML = 
+            `
+                <td class="checkbox-column"><input type="checkbox" class="finished-checkbox"></td>
+                <td>${title}</td>
+                <td>${description}</td>
+                <td><button onclick="deleteRow(this)">Delete</button></td>
+            `;
+            tableBody.appendChild(newRow);
+        });
+
+        function deleteRow(button) {
+            const row = button.parentNode.parentNode
+            row.parentNode.removeChild(row)
+        }
+    </script>
+</body>
